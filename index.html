@@ -1,0 +1,1384 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="dsh-design" content="web">
+<meta name="description" content="栖光 MBTI：28 道题，一份安静的自我观察。没有对错，也没有更好的性格。">
+<meta name="theme-color" content="#F6F1E7">
+<meta property="og:type" content="website">
+<meta property="og:title" content="栖光 · MBTI 人格测评">
+<meta property="og:description" content="28 道题，一份安静的自我观察。没有对错，也没有更好的性格。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F6F1E7'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%234E6153' stroke-width='1.6' opacity='.35'/%3E%3Cpath d='M16 8.5a7.5 7.5 0 1 0 7.5 7.5' fill='none' stroke='%234E6153' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%23A9684C'/%3E%3C/svg%3E">
+<title>栖光 · MBTI 人格测评</title>
+<style>
+/* ============ 设计变量 ============ */
+:root{
+  --bg:#F6F1E7;
+  --bg-soft:#FBF8F0;
+  --surface:#FFFDF8;
+  --surface-2:#F1EADD;
+  --ink:#2B2620;
+  --ink-2:#554E44;
+  --muted:#6F665A;
+  --line:rgba(43,38,32,.10);
+  --line-2:rgba(43,38,32,.20);
+  --primary:#4E6153;
+  --primary-hi:#435445;
+  --tint:#E9EEE2;
+  --accent:#A9684C;
+  --accent-ink:#8B4F36;
+
+  --nt:#45655D;
+  --nf:#A9603F;
+  --sj:#6C663C;
+  --sp:#57708A;
+
+  --sans:"Inter","Noto Sans SC","HarmonyOS Sans SC","PingFang SC","MiSans","Microsoft YaHei",system-ui,sans-serif;
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong",Georgia,serif;
+
+  --r-s:10px;
+  --r-m:16px;
+  --r-l:22px;
+  --r-xl:32px;
+
+  --shadow-s:0 2px 6px -3px rgba(43,38,32,.16);
+  --shadow-m:0 18px 34px -26px rgba(43,38,32,.55);
+  --shadow-l:0 42px 80px -56px rgba(43,38,32,.65);
+
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --wid:min(1120px,100% - 48px);
+}
+
+/* ============ 基础 ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.7;
+  color:var(--ink);
+  background:
+    radial-gradient(1100px 620px at 82% -12%, #F0E7D6 0%, rgba(240,231,214,0) 62%),
+    radial-gradient(900px 560px at -6% 104%, #E7EDE0 0%, rgba(231,237,224,0) 58%),
+    var(--bg);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:2;pointer-events:none;
+  opacity:.032;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img,svg{display:block;max-width:100%}
+[hidden]{display:none!important}
+h1,h2,h3,h4,p,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:pointer}
+::selection{background:#DCE4D2;color:var(--ink)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:8px}
+
+.wid{width:var(--wid);margin-inline:auto}
+.serif{font-family:var(--serif)}
+
+/* ============ 顶栏 ============ */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(246,241,231,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.topbar-inner{width:var(--wid);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--ink);border-radius:12px;padding:6px 4px}
+.brand svg{color:var(--primary);transition:transform .5s var(--ease)}
+.brand:hover svg{transform:rotate(-24deg)}
+.brand-name{font-family:var(--serif);font-size:19px;letter-spacing:.22em;padding-left:.22em}
+.brand-en{font-size:9.5px;letter-spacing:.26em;color:var(--muted);text-transform:uppercase;margin-left:2px;padding-top:3px}
+.topnav{display:flex;align-items:center;gap:26px}
+.nav-link{font-size:14px;color:var(--ink-2);position:relative;padding:6px 0;transition:color .2s var(--ease)}
+.nav-link::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:currentColor;opacity:.4;transition:right .35s var(--ease)}
+.nav-link:hover{color:var(--primary)}
+.nav-link:hover::after{right:0}
+body.is-quiz .nav-how,body.is-result .nav-how{display:none}
+
+/* ============ 按钮 ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 28px;border-radius:999px;font-size:15.5px;font-weight:500;
+  letter-spacing:.02em;transition:transform .22s var(--ease),background .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease),color .22s var(--ease);
+  white-space:nowrap;
+}
+.btn svg{flex:none;transition:transform .25s var(--ease)}
+.btn:hover svg.arrow{transform:translateX(3px)}
+.btn-primary{background:var(--primary);color:#FBF8F1;box-shadow:0 16px 30px -20px rgba(78,97,83,.85)}
+.btn-primary:hover{background:var(--primary-hi);transform:translateY(-2px);box-shadow:0 22px 36px -20px rgba(78,97,83,.9)}
+.btn-primary:active{transform:translateY(0) scale(.99)}
+.btn-ghost{border:1px solid var(--line-2);color:var(--ink-2);background:transparent}
+.btn-ghost:hover{background:var(--surface);border-color:rgba(78,97,83,.45);color:var(--ink);transform:translateY(-1px)}
+.btn-sm{min-height:44px;padding:0 20px;font-size:14px}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important}
+.link-back{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);padding:8px 2px;border-radius:8px;transition:color .2s var(--ease)}
+.link-back:hover{color:var(--ink)}
+.link-back:disabled{opacity:.35;cursor:not-allowed}
+
+/* ============ 屏幕切换 ============ */
+.screen{display:none}
+.screen.is-active{display:block;animation:screenIn .5s var(--ease) both}
+@keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ============ 首页 ============ */
+.hero{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center;padding:70px 0 64px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.55}
+.hero h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(34px,4.7vw,58px);line-height:1.28;letter-spacing:.01em;
+  margin:24px 0 0;text-wrap:balance;
+}
+.hero h1 .mark{
+  color:var(--accent-ink);
+  text-decoration:underline;text-decoration-color:rgba(169,104,76,.28);
+  text-decoration-thickness:4px;text-underline-offset:9px;
+}
+.hero-sub{margin-top:22px;max-width:31em;font-size:16px;line-height:1.85;color:var(--ink-2)}
+.hero-actions{display:flex;align-items:center;gap:18px;margin-top:36px;flex-wrap:wrap}
+.hero-meta{display:flex;gap:10px;align-items:center;margin-top:26px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.hero-meta span:nth-child(even){opacity:.45}
+.saved-chip{
+  display:inline-flex;align-items:center;gap:12px;margin-top:26px;
+  border:1px solid var(--line-2);border-radius:999px;padding:7px 8px 7px 18px;
+  font-size:13px;color:var(--ink-2);background:rgba(255,253,248,.6);
+}
+.saved-chip b{font-family:var(--serif);letter-spacing:.1em;color:var(--primary);font-size:14px}
+.saved-chip button{font-size:12.5px;color:var(--accent-ink);border:1px solid rgba(169,104,76,.28);border-radius:999px;padding:6px 14px;transition:background .2s var(--ease)}
+.saved-chip button:hover{background:rgba(169,104,76,.09)}
+
+/* 呼吸光球 */
+.hero-art{position:relative;aspect-ratio:1/1;max-width:460px;margin-left:auto;width:100%}
+.orb{position:absolute;inset:0;display:grid;place-items:center}
+.orb-halo{position:absolute;width:88%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 62% 38%, rgba(190,140,110,.22), rgba(190,140,110,0) 62%);
+  filter:blur(28px);animation:breathe 8s var(--ease) infinite}
+.orb-ring{position:absolute;border-radius:50%;border:1px solid rgba(78,97,83,.16);width:78%;aspect-ratio:1;animation:breathe 8s var(--ease) infinite}
+.orb-ring.r2{width:96%;border-color:rgba(78,97,83,.09);animation-delay:-2.4s}
+.orb-core{
+  position:relative;width:60%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%, #F3E8D6 0%, #DDDCC5 34%, #B9C6B0 68%, #93A896 100%);
+  box-shadow:inset 0 -20px 50px rgba(120,140,118,.35), inset 0 14px 30px rgba(255,255,255,.55), 0 40px 70px -45px rgba(78,97,83,.9);
+  animation:breathe 8s var(--ease) infinite;
+}
+.orb-core::after{content:"";position:absolute;inset:14%;border-radius:50%;
+  background:radial-gradient(circle at 38% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%)}
+.orb-caption{position:absolute;bottom:4%;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.orb-caption::before{content:"";display:block;width:1px;height:26px;margin:0 auto 10px;background:linear-gradient(to bottom,rgba(43,38,32,.22),transparent)}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.05);opacity:1}}
+
+/* 说明 */
+.how{border-top:1px solid var(--line);margin-top:16px;scroll-margin-top:96px}
+.how-item{display:grid;grid-template-columns:72px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
+.how-num{font-family:var(--serif);font-size:13px;color:var(--muted);letter-spacing:.1em;padding-top:5px}
+.how-item h3{font-size:17px;font-weight:600;letter-spacing:.02em}
+.how-item p{margin-top:7px;font-size:14.5px;line-height:1.8;color:var(--muted);max-width:44em}
+
+/* 引言 */
+.quote{padding:76px 0 68px;max-width:720px}
+.quote-mark{font-family:var(--serif);font-size:64px;line-height:.6;color:var(--accent);opacity:.3;display:block;margin-bottom:12px}
+.quote p{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);line-height:1.65;letter-spacing:.02em;color:var(--ink);text-wrap:balance}
+.quote cite{margin-top:20px;display:block;font-style:normal;font-size:13px;color:var(--muted);letter-spacing:.06em}
+
+/* 家族 */
+.families{padding-bottom:24px}
+.sec-lead{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.sec-lead h2{font-family:var(--serif);font-size:clamp(22px,2.4vw,28px);font-weight:600;letter-spacing:.03em}
+.sec-lead p{font-size:13.5px;color:var(--muted);padding-bottom:6px}
+.fam-row{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;padding:24px 4px;border-bottom:1px solid var(--line);transition:padding .3s var(--ease),background .3s var(--ease)}
+.fam-row:hover{background:rgba(255,253,248,.6);padding-left:14px;padding-right:14px;border-radius:14px}
+.fam-name{display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:600;letter-spacing:.06em}
+.fam-name::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--type-accent)}
+.fam-row .codes{font-size:12.5px;letter-spacing:.1em;color:var(--muted)}
+.fam-row .desc{font-size:14px;color:var(--ink-2);line-height:1.7}
+.fam-row .arrow{color:var(--muted);transition:transform .3s var(--ease),color .3s var(--ease)}
+.fam-row:hover .arrow{transform:translateX(4px);color:var(--primary)}
+.fam-nt{--type-accent:var(--nt)}
+.fam-nf{--type-accent:var(--nf)}
+.fam-sj{--type-accent:var(--sj)}
+.fam-sp{--type-accent:var(--sp)}
+
+/* ============ 测评 ============ */
+.quiz-shell{max-width:880px;margin-inline:auto;padding:34px 0 80px}
+.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.quiz-count{font-size:12.5px;letter-spacing:.14em;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress{height:3px;border-radius:99px;background:rgba(43,38,32,.09);overflow:hidden}
+.progress>span{display:block;height:100%;background:var(--primary);border-radius:99px;transition:width .45s var(--ease)}
+.quiz-card{
+  margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);
+  padding:48px 48px 44px;box-shadow:var(--shadow-l);
+  transition:opacity .18s var(--ease),transform .18s var(--ease);
+}
+.quiz-card.is-out{opacity:0;transform:translateY(-8px)}
+.q-index{font-family:var(--serif);font-size:12px;letter-spacing:.2em;color:var(--muted)}
+.q-stem{
+  font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.5vw,29px);
+  line-height:1.55;letter-spacing:.01em;margin:18px 0 34px;color:var(--ink);text-wrap:balance;
+}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt{
+  position:relative;display:flex;align-items:center;min-height:126px;
+  padding:24px 40px 24px 24px;border:1px solid var(--line);border-radius:var(--r-l);
+  background:var(--bg-soft);font-size:16px;line-height:1.75;color:var(--ink-2);
+  text-align:left;transition:border-color .22s var(--ease),background .22s var(--ease),transform .22s var(--ease),box-shadow .22s var(--ease),color .22s var(--ease);
+  animation:optIn .42s var(--ease) both;
+}
+.opt:nth-child(2){animation-delay:.06s}
+.opt:hover{border-color:rgba(78,97,83,.42);background:#fff;color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow-m)}
+.opt:active{transform:translateY(0) scale(.995)}
+.opt:focus-visible{outline-offset:3px}
+.opt-key{position:absolute;top:14px;right:15px;font-size:10.5px;letter-spacing:.1em;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;transition:color .2s,border-color .2s}
+.opt:hover .opt-key{color:var(--primary);border-color:rgba(78,97,83,.3)}
+@keyframes optIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.quiz-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:18px;flex-wrap:wrap}
+.quiz-hint{font-size:12.5px;color:var(--muted);letter-spacing:.02em}
+
+/* 呼吸停顿 */
+.pause-card{margin-top:30px;text-align:center;padding:64px 48px}
+.breathe-dot{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 30px;
+  background:radial-gradient(circle at 36% 30%, #EFE4D0, #B9C6B0 70%, #93A896 100%);
+  box-shadow:0 0 0 10px rgba(185,198,176,.16),0 0 0 22px rgba(185,198,176,.07);
+  animation:breathe 7s var(--ease) infinite;
+}
+.pause-line{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);line-height:1.6;letter-spacing:.02em}
+.pause-sub{margin-top:12px;font-size:13.5px;color:var(--muted)}
+.pause-card .btn{margin-top:30px}
+
+/* 计算中 */
+.computing{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+.computing.is-on{opacity:1;pointer-events:auto}
+.comp-inner{text-align:center;padding:0 24px}
+.dots{display:flex;gap:7px;justify-content:center;margin-bottom:22px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--primary);opacity:.35;animation:dotPulse 1.4s var(--ease) infinite}
+.dots i:nth-child(2){animation-delay:.16s}
+.dots i:nth-child(3){animation-delay:.32s}
+@keyframes dotPulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:.9;transform:translateY(-4px)}}
+.comp-inner p{font-family:var(--serif);font-size:16px;color:var(--ink-2);letter-spacing:.04em}
+
+/* ============ 结果 ============ */
+.result-shell{max-width:1060px;margin-inline:auto;padding:44px 0 90px}
+.result-topline{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:26px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.result-date{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+.result-hero{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center;padding:54px 0 20px;position:relative}
+.result-hero::before{
+  content:"";position:absolute;left:-12%;top:-18%;width:520px;height:420px;pointer-events:none;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--type-accent) 13%,transparent),transparent 72%);
+  filter:blur(10px);z-index:0;
+}
+.result-hero>*{position:relative;z-index:1}
+.code{
+  font-family:var(--serif);font-weight:500;font-size:clamp(62px,9.6vw,108px);
+  line-height:1;letter-spacing:.13em;color:var(--type-accent);margin-left:-.04em;
+}
+.type-name{margin-top:20px;font-family:var(--serif);font-size:clamp(24px,2.8vw,34px);font-weight:600;letter-spacing:.06em}
+.tagline{margin-top:10px;font-size:15px;color:var(--muted);letter-spacing:.02em}
+.result-hero .intro-text{font-size:16.5px;line-height:1.95;color:var(--ink-2);border-left:2px solid color-mix(in srgb,var(--type-accent) 45%,transparent);padding-left:22px;text-align:justify}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-size:12.5px;letter-spacing:.06em;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+
+.sec{margin-top:64px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:22px;margin-bottom:30px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.06em}
+.sec-head span{font-size:12px;color:var(--muted);letter-spacing:.04em}
+
+.dims{display:grid;gap:26px}
+.dim{display:grid;grid-template-columns:auto minmax(90px,1fr) auto;gap:20px;align-items:center}
+.dim-side{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);white-space:nowrap;transition:color .3s}
+.dim-side--r{justify-content:flex-end}
+.dim-side.is-win{color:var(--ink)}
+.dim-side.is-win .dim-name{font-weight:600}
+.dim-let{font-size:11px;letter-spacing:.08em;opacity:.6}
+.dim-pct{font-size:12px;font-variant-numeric:tabular-nums;min-width:34px}
+.dim-side.is-win .dim-pct{color:var(--type-accent);opacity:1;font-weight:600}
+.dim-track{position:relative;height:2px;background:rgba(43,38,32,.12);border-radius:2px}
+.dim-tick{position:absolute;left:50%;top:-4px;width:1px;height:10px;background:rgba(43,38,32,.18)}
+.dim-fill{position:absolute;top:-1px;height:4px;border-radius:4px;background:var(--type-accent);opacity:.55;left:50%;width:0;transition:left .9s var(--ease),width .9s var(--ease)}
+.dim-fill::after{
+  content:"";position:absolute;top:50%;right:-6px;transform:translateY(-50%);
+  width:11px;height:11px;border-radius:50%;background:var(--surface);border:2px solid var(--type-accent);
+}
+.dim-fill.flip::after{right:auto;left:-6px}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.block-title{font-size:13px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:20px}
+.list{display:grid;gap:16px}
+.list li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:15.5px;line-height:1.75;color:var(--ink-2)}
+.list li .mark{font-family:var(--serif);font-size:12px;color:var(--type-accent);padding-top:4px;letter-spacing:.06em}
+.list--soft li{color:var(--muted)}
+.list--soft li .mark{color:rgba(43,38,32,.3)}
+
+.prose-rows{border-top:1px solid var(--line)}
+.prose-row{display:grid;grid-template-columns:160px 1fr;gap:28px;padding:26px 0;border-bottom:1px solid var(--line);align-items:start}
+.prose-row h3{font-size:14px;font-weight:600;letter-spacing:.08em;color:var(--ink);padding-top:2px}
+.prose-row h3 span{display:block;font-size:11px;font-weight:400;letter-spacing:.14em;color:var(--muted);margin-top:4px;text-transform:uppercase}
+.prose-row p{font-size:15.5px;line-height:1.85;color:var(--ink-2);max-width:46em}
+
+.result-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:56px;border-top:1px solid var(--line);padding-top:30px}
+.result-actions .spacer{flex:1}
+.footnote{margin-top:26px;font-size:12.5px;line-height:1.9;color:var(--muted);max-width:52em}
+.preview-note{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);border:1px dashed var(--line-2);border-radius:999px;padding:6px 14px}
+
+/* ============ 十六型抽屉 ============ */
+.sheet{position:fixed;inset:0;z-index:60;display:none}
+.sheet.is-open{display:block}
+.sheet-bg{position:absolute;inset:0;background:rgba(43,38,32,.34);backdrop-filter:blur(3px);animation:fade .3s var(--ease) both}
+.sheet-panel{
+  position:relative;margin:6vh auto 0;width:min(1100px,calc(100% - 40px));max-height:88vh;overflow:auto;
+  background:var(--bg);border-radius:var(--r-xl);padding:44px 44px 52px;
+  box-shadow:0 60px 120px -50px rgba(43,38,32,.7);animation:sheetIn .38s var(--ease) both;
+  overscroll-behavior:contain;
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes sheetIn{from{opacity:0;transform:translateY(18px) scale(.995)}to{opacity:1;transform:none}}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.sheet-head h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);font-weight:600;letter-spacing:.04em}
+.sheet-head p{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.8;max-width:34em}
+.sheet-close{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--ink-2);flex:none;transition:background .2s,border-color .2s,transform .2s}
+.sheet-close:hover{background:var(--surface);border-color:var(--line-2);transform:rotate(90deg)}
+.sheet-group{padding-top:30px}
+.sheet-group-head{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.sheet-group-head .dot{width:7px;height:7px;border-radius:50%;background:var(--type-accent);align-self:center}
+.sheet-group-head b{font-size:14px;letter-spacing:.08em;font-weight:600}
+.sheet-group-head em{font-style:normal;font-size:12px;color:var(--muted);letter-spacing:.02em}
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.type-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+  padding:18px 18px 16px;border:1px solid var(--line);border-radius:var(--r-m);
+  background:rgba(255,253,248,.5);text-align:left;
+  transition:border-color .22s var(--ease),background .22s var(--ease),transform .22s var(--ease),box-shadow .22s var(--ease);
+}
+.type-card:hover{background:var(--surface);border-color:color-mix(in srgb,var(--type-accent) 40%,transparent);transform:translateY(-2px);box-shadow:var(--shadow-m)}
+.tc-code{font-family:var(--serif);font-size:17px;letter-spacing:.1em;color:var(--type-accent)}
+.tc-name{font-size:14px;font-weight:600;letter-spacing:.04em}
+.tc-tag{font-size:11.5px;color:var(--muted);line-height:1.6;margin-top:2px}
+
+/* ============ Toast / 页脚 ============ */
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translate(-50%,14px);z-index:80;
+  background:var(--ink);color:#F7F2E8;font-size:13.5px;letter-spacing:.02em;
+  padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+  box-shadow:0 18px 34px -18px rgba(0,0,0,.6);
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+.site-footer{border-top:1px solid var(--line);margin-top:20px}
+.footer-inner{width:var(--wid);margin-inline:auto;display:flex;justify-content:space-between;gap:28px;padding:38px 0 48px;flex-wrap:wrap}
+.footer-brand{font-family:var(--serif);font-size:15px;letter-spacing:.16em;color:var(--ink)}
+.footer-note{margin-top:8px;font-size:12px;color:var(--muted);line-height:1.9;max-width:34em}
+.footer-meta{font-size:12px;color:var(--muted);text-align:right;line-height:2}
+
+/* ============ 响应式 ============ */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:26px;padding:44px 0 40px}
+  .hero-art{max-width:300px;margin:0 auto;order:0}
+  .result-hero{grid-template-columns:1fr;gap:32px;padding-top:36px}
+  .duo{grid-template-columns:1fr;gap:44px}
+  .type-grid{grid-template-columns:repeat(2,1fr)}
+  .sheet-panel{padding:32px 26px 40px;margin-top:4vh}
+}
+@media (max-width:760px){
+  :root{--wid:calc(100% - 36px)}
+  .topbar-inner{height:62px}
+  .brand-en{display:none}
+  .topnav{gap:18px}
+  .nav-link{font-size:13px}
+  .hero h1{font-size:clamp(30px,8vw,40px)}
+  .quiz-shell{padding:20px 0 56px}
+  .quiz-card{padding:28px 22px 26px;border-radius:26px;margin-top:22px}
+  .q-stem{margin:14px 0 26px}
+  .q-opts{grid-template-columns:1fr}
+  .opt{min-height:0;padding:18px 38px 18px 20px}
+  .opt-key{top:16px;right:14px}
+  .pause-card{padding:46px 24px}
+  .quote{padding:48px 0 44px}
+  .prose-row{grid-template-columns:1fr;gap:8px;padding:22px 0}
+  .dim{grid-template-columns:auto 1fr auto;gap:12px}
+  .dim-side{font-size:13px;gap:5px}
+  .dim-name{display:none}
+  .result-actions{gap:10px}
+  .result-actions .btn{flex:1 1 auto;padding:0 18px;font-size:14px}
+  .result-actions .spacer{display:none}
+  .footer-inner{flex-direction:column}
+  .footer-meta{text-align:left}
+  .how-item{grid-template-columns:44px 1fr;gap:14px;padding:24px 0}
+  .fam-row{grid-template-columns:1fr auto;gap:6px 16px;padding:20px 4px}
+  .fam-row .codes{grid-column:1;font-size:11.5px}
+  .fam-row .desc{grid-column:1/-1;font-size:13px;padding-top:4px}
+  .fam-row .arrow{grid-row:1;grid-column:2}
+}
+@media (max-width:420px){
+  .type-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .type-card{padding:14px 14px 12px}
+  .tc-code{font-size:15px}
+  .hero-actions{gap:12px}
+  .btn{padding:0 22px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="brand" id="brandBtn" aria-label="回到栖光首页">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.4" stroke="currentColor" stroke-width="1.4" opacity=".35"/>
+        <path d="M12 6.2a5.8 5.8 0 1 0 5.8 5.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
+      </svg>
+      <span class="brand-name">栖光</span>
+      <span class="brand-en">Qiguang</span>
+    </button>
+    <nav class="topnav" aria-label="主导航">
+      <a href="#how" class="nav-link nav-how" id="howLink">测评说明</a>
+      <button class="nav-link" id="typesBtn" type="button">十六型人格</button>
+    </nav>
+  </div>
+</div>
+
+<main>
+
+  <!-- ================= 首页 ================= -->
+  <section class="screen is-active" id="screen-intro">
+    <div class="wid">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">MBTI 人格测绘 · 28 题</span>
+          <h1>慢慢来，<br>先认识一下<span class="mark">自己</span>。</h1>
+          <p class="hero-sub">栖光是一份安静的自我观察。这里的每道题都没有对错，也没有"更好的性格"——只有你本来的样子，被你更清楚地看见一次。</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="startBtn" type="button">
+              <span id="startLabel">开始测评</span>
+              <svg class="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="btn btn-ghost" id="peekBtn" type="button">先看看十六种人</button>
+          </div>
+          <div class="saved-chip" id="savedChip" hidden>
+            <span>上次的结果 · <b id="savedCode">INFP</b> <span id="savedName">调停者</span></span>
+            <button type="button" id="savedOpen">再看一眼</button>
+          </div>
+          <p class="hero-meta"><span>28 个问题</span><span>·</span><span>约 5 分钟</span><span>·</span><span>答案只留在这台设备</span></p>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="orb">
+            <div class="orb-halo"></div>
+            <div class="orb-ring"></div>
+            <div class="orb-ring r2"></div>
+            <div class="orb-core"></div>
+            <span class="orb-caption">深呼吸三次，再开始</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="how" id="how" aria-label="测评说明">
+        <div class="how-item">
+          <span class="how-num">01</span>
+          <div>
+            <h3>不带评判</h3>
+            <p>每道题没有"更好"的答案，只有更接近你的那一个。选第一反应就好，想太久反而会选成"应该的样子"。</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-num">02</span>
+          <div>
+            <h3>不赶时间</h3>
+            <p>28 道题，大约五分钟。中途可以退出，答案会留在这台设备上，随时回来接着做。</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-num">03</span>
+          <div>
+            <h3>不贴标签</h3>
+            <p>结果是一面镜子，不是一张判决书。它描述倾向，不定义你是谁；你随时可以不同意它。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quote">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <p>你不需要成为另一个人，<br>才值得被喜欢。</p>
+        <cite>—— 栖光，写给每一个正在认识自己的人</cite>
+      </section>
+
+      <section class="families" aria-label="十六型人格概览">
+        <div class="sec-lead">
+          <h2>十六种样子</h2>
+          <p>点开任意一种，看看它怎么描述人</p>
+        </div>
+        <a href="#" class="fam-row fam-nt" data-sheet="1">
+          <span class="fam-name">分析者</span>
+          <span class="codes">INTJ &nbsp;INTP&nbsp; ENTJ&nbsp; ENTP</span>
+          <span class="desc">用逻辑把世界拆开，再重新搭起来。</span>
+          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="fam-row fam-nf" data-sheet="1">
+          <span class="fam-name">理想者</span>
+          <span class="codes">INFJ &nbsp;INFP&nbsp; ENFJ&nbsp; ENFP</span>
+          <span class="desc">在意意义，也在意人心里那点微光。</span>
+          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="fam-row fam-sj" data-sheet="1">
+          <span class="fam-name">守护者</span>
+          <span class="codes">ISTJ &nbsp;ISFJ&nbsp; ESTJ&nbsp; ESFJ</span>
+          <span class="desc">把承诺、秩序和照顾，变成日常。</span>
+          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="fam-row fam-sp" data-sheet="1">
+          <span class="fam-name">探索者</span>
+          <span class="codes">ISTP &nbsp;ISFP&nbsp; ESTP&nbsp; ESFP</span>
+          <span class="desc">在当下动手，用身体去感受世界。</span>
+          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </section>
+    </div>
+  </section>
+
+  <!-- ================= 测评 ================= -->
+  <section class="screen" id="screen-quiz">
+    <div class="wid">
+      <div class="quiz-shell">
+        <div class="quiz-head">
+          <button class="link-back" id="quitBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            退出
+          </button>
+          <span class="quiz-count" id="quizCount">01 / 28</span>
+        </div>
+        <div class="progress" role="progressbar" aria-label="测评进度" aria-valuemin="0" aria-valuemax="28" aria-valuenow="0" id="progress"><span id="progressBar" style="width:0%"></span></div>
+
+        <div id="quizStage">
+          <div class="quiz-card" id="quizCard">
+            <span class="q-index" id="qIndex">Q.01</span>
+            <h2 class="q-stem" id="qStem" aria-live="polite"></h2>
+            <div class="q-opts" id="qOpts"></div>
+          </div>
+          <div class="quiz-foot">
+            <button class="link-back" id="backBtn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              上一题
+            </button>
+            <span class="quiz-hint">按 1 / 2 选择 · 第一反应通常最接近你</span>
+          </div>
+        </div>
+
+        <div id="pauseStage" hidden>
+          <div class="quiz-card pause-card">
+            <div class="breathe-dot" aria-hidden="true"></div>
+            <p class="pause-line" id="pauseLine">慢慢来，不用急着想清楚。</p>
+            <p class="pause-sub" id="pauseSub">已经完成 7 / 28。深呼吸一次，再继续。</p>
+            <button class="btn btn-primary" id="pauseBtn" type="button">继续</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 结果 ================= -->
+  <section class="screen" id="screen-result">
+    <div class="wid">
+      <div class="result-shell fam-nf" id="resultShell"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">栖光 QIGUANG</div>
+      <p class="footer-note">本测评基于 MBTI 的四个维度自编 28 道题目，用于自我了解与对话，不构成心理诊断，也不替代专业评估。结果只保存在你自己的浏览器里。</p>
+    </div>
+    <div class="footer-meta">
+      慢慢来，比较快<br>
+      <span id="footerYear">© 2026</span> 栖光
+    </div>
+  </div>
+</footer>
+
+<!-- 十六型抽屉 -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-bg" id="sheetBg"></div>
+  <div class="sheet-panel">
+    <div class="sheet-head">
+      <div>
+        <h2 id="sheetTitle">十六种人格</h2>
+        <p>四种气质、十六种侧重。它们没有高下之分，只是人靠近世界的不同方式。</p>
+      </div>
+      <button class="sheet-close" id="sheetClose" type="button" aria-label="关闭">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<div class="computing" id="computing" aria-hidden="true">
+  <div class="comp-inner">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <p>正在把这些答案，慢慢拼成你的样子…</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ---------------- 数据 ---------------- */
+  var DIM_ORDER = ['EI','SN','TF','JP'];
+  var POLE = { EI:['E','I'], SN:['S','N'], TF:['T','F'], JP:['J','P'] };
+  var DIM_META = {
+    EI:{ a:{l:'E', n:'外倾'}, b:{l:'I', n:'内倾'} },
+    SN:{ a:{l:'S', n:'实感'}, b:{l:'N', n:'直觉'} },
+    TF:{ a:{l:'T', n:'思考'}, b:{l:'F', n:'情感'} },
+    JP:{ a:{l:'J', n:'判断'}, b:{l:'P', n:'知觉'} }
+  };
+
+  var ITEMS = {
+    EI:[
+      ['一场热闹的聚会散场后，你通常', '还有话没说完，想再待一会儿', '想赶紧回家，安静地待着'],
+      ['需要给自己"充电"的时候，你会', '约上朋友出门走走', '一个人待着，谁也别来打扰'],
+      ['走进一个都不太熟的房间，你更常', '主动找人搭话，很快就熟起来', '先观察一会儿，等别人来找你'],
+      ['一个想法还没成形时，你倾向', '边说边想，说出来才清楚', '先在脑子里想明白再开口'],
+      ['周末更让你期待的是', '热闹的市集、展览或演出', '在家煮茶看书的一整天'],
+      ['遇到一件麻烦事，你更愿意', '找个人一起商量着办', '自己安静地把它处理完'],
+      ['下面哪种场景更容易打动你', '人群里突然响起的合唱', '深夜只剩一盏灯的窗']
+    ],
+    SN:[
+      ['听到一个新点子，你先想到的是', '它能打开哪些新的可能', '它具体要怎么落地'],
+      ['做判断的时候，你更信任', '心里隐约的直觉', '亲眼看到的事实'],
+      ['读一本书时，你更享受', '句子背后的意味和联想', '清晰准确的叙述和细节'],
+      ['回想一段旅程，你记得更多的是', '当时的气氛和心情', '去过的地点和做过的事'],
+      ['你的注意力更常被什么占据', '对未来的各种想象', '眼前需要处理的事'],
+      ['向别人描述一个人，你会先说', '他给人的整体感觉', '他的具体样子和习惯'],
+      ['你更喜欢的工作方式是', '先把大方向想清楚，再动手', '先动手做，边做边调整']
+    ],
+    TF:[
+      ['朋友向你倾诉烦恼时，你第一反应是', '帮他理清问题出在哪', '让他知道有人站在他这边'],
+      ['做决定时，你更看重', '哪个选择更合理', '哪个选择让人更舒服'],
+      ['被人指出错误时，你更在意', '他说得有没有道理', '他说话的方式会不会伤人'],
+      ['你更容易被什么说服', '逻辑严密的论证', '真实具体的经历'],
+      ['在一个团队里，你更自然地扮演', '把问题说清楚的人', '注意到大家情绪的人'],
+      ['你更希望听到', '直接坦率的评价', '委婉善意的提醒'],
+      ['面对一个艰难的选择，你会', '列出利弊，逐条比较', '听心里最在意的那个声音']
+    ],
+    JP:[
+      ['出门旅行前，你会', '把行程安排得比较清楚', '留出大片空白，走到哪算哪'],
+      ['面对截止日期，你通常', '提前做完，留出余量', '在最后一段时间里效率最高'],
+      ['你的桌面更常见的样子是', '东西归位，各在其所', '摊开着正在做的事'],
+      ['计划被临时改变时，你', '需要一点时间调整过来', '觉得这样也挺有意思'],
+      ['你更喜欢哪种状态', '事情有明确的结论', '各种可能性都还留着'],
+      ['待办清单对你来说', '是让心里踏实的东西', '不如先做起来重要'],
+      ['一天结束时，让你更安心的是', '今天该做的都做完了', '今天过得还算尽兴']
+    ]
+  };
+
+  var TYPES = {
+    INTJ:{name:'建筑师', family:'nt', tagline:'在喧闹里保持清醒的规划者',
+      kw:['长期主义','独立','结构感'],
+      intro:'你习惯先在心里画好一张地图，再决定往哪走。别人看到的是冷静和距离，其实那只是你在保护自己想清楚的空间。你对"更好"有一种近乎固执的想象，也愿意为它安静地熬很久。',
+      gifts:['把复杂的事拆成一条条路径','在混乱里守住自己的判断','对长期目标的耐力'],
+      needs:['容易把"需要帮助"当成效率问题','对慢节奏的人缺少一点耐心'],
+      rhythm:'把社交降到最低配，把独处写进日程。你的能量来自不被打断的整块时间。',
+      together:'不必频繁确认关系，给彼此安静；但也别用沉默代替说明。'},
+    INTP:{name:'逻辑学家', family:'nt', tagline:'追着"为什么"一直走的人',
+      kw:['好奇','拆解','自由'],
+      intro:'你的脑子里常同时开着好几扇窗，风从每一扇吹进来。你不太在意结论是否漂亮，只在意它是否成立。你不是冷淡，只是更习惯用思考靠近世界。',
+      gifts:['一眼看到逻辑的裂缝','提出别人没想过的问题','独立学懂一个新领域'],
+      needs:['想法很多，落地常常拖延','不太会主动表达在乎'],
+      rhythm:'留出大块不被打断的时间用来想事情，比安排十个小会议有用得多。',
+      together:'先说清楚你的沉默不是拒绝，再慢慢把想法讲出来。'},
+    ENTJ:{name:'指挥官', family:'nt', tagline:'把想法推向现实的人',
+      kw:['决断','推动','目标感'],
+      intro:'你天生对"往哪走"有感觉，也愿意为那个方向承担压力。你说话直接，效率优先，可能没注意到自己已经推得有点快。你想要的从来不只是赢，而是把事情真的做成。',
+      gifts:['迅速抓住重点做决定','让一群人朝着同一个方向','在压力下依然往前推'],
+      needs:['容易把休息当成浪费时间','直接的表达有时让人退缩'],
+      rhythm:'给日程留出空白——不是所有时间都必须产出。',
+      together:'你的坦率是善意，记得把它说出来，而不是只做出来。'},
+    ENTP:{name:'辩论家', family:'nt', tagline:'永远在找新可能的点子收集者',
+      kw:['机敏','好玩','破局'],
+      intro:'你喜欢把一件事翻过来看，再翻回去。规则在你眼里是可以商量的事，无聊才是真正的敌人。你带来的是风，是新的角度，也是别人想不到的那条路。',
+      gifts:['快速联想，点子密集','在僵局里找到第三条路','让沉闷的场面活起来'],
+      needs:['开头热情，收尾容易松手','说话太快，偶尔踩到人'],
+      rhythm:'同时只留两个正在进行的项目，其余的写下来，先放着。',
+      together:'你的玩笑是亲近，但对方可能先需要一句认真的回应。'},
+    INFJ:{name:'提倡者', family:'nf', tagline:'温柔而清醒的洞察者',
+      kw:['洞察','理想','克制'],
+      intro:'你总能比别人早一点察觉空气里的变化，也常常因此替别人多承担一些。你看起来安静，心里却有一团很亮的火，关于世界应该是什么样子。你需要的不是更多道理，是一个可以放下戒备的地方。',
+      gifts:['听懂话外之音','把理想变成具体的坚持','让人愿意说真话'],
+      needs:['习惯照顾别人，很少开口要','想得太多，容易内耗'],
+      rhythm:'每天留一段只属于自己的安静，不必向谁解释。',
+      together:'你不必总是那个懂事的倾听者，也可以先说说自己。'},
+    INFP:{name:'调停者', family:'nf', tagline:'心里住着一首诗的人',
+      kw:['柔软','真诚','想象'],
+      intro:'你对世界有一种近乎固执的温柔，相信事情应该更公平一点、更美一点。你不太争，但心里有很清楚的好恶。你的力量不在声量，而在你愿意为在意的东西一直留着那盏灯。',
+      gifts:['共情很深，能接住别人','对美和意义敏感','忠于自己认定的价值'],
+      needs:['容易把情绪收起来自己消化','决定之前反复犹疑'],
+      rhythm:'允许自己慢，也允许有些事暂时没有答案。',
+      together:'你的沉默不是冷淡，偶尔把它翻译成一句话给对方。'},
+    ENFJ:{name:'主人公', family:'nf', tagline:'把别人放在心上的引路人',
+      kw:['热忱','联结','责任感'],
+      intro:'你天生会照顾一个场子，知道谁被落下了，也知道该说什么让人重新抬起头。你相信人可以变好，并愿意花时间陪着变好。只是别忘了，你也在需要被照顾的那一列。',
+      gifts:['让陌生人很快放松下来','看见每个人身上的可能','把大家带到一起'],
+      needs:['太在意别人的评价','容易替别人的人生操心过头'],
+      rhythm:'每周留一天，不安排任何"应该"。',
+      together:'你对别人的好，也可以分一点给自己。'},
+    ENFP:{name:'竞选者', family:'nf', tagline:'永远在发芽的人',
+      kw:['明亮','自由','可能性'],
+      intro:'你对世界保持着一种很少被消磨掉的新鲜感，看到什么都想试一试。你温暖、直接，也容易在同一个地方待不住。你的热情是真的，只是需要有人陪你把它种进土里。',
+      gifts:['迅速点亮一段关系','想到别人想不到的连接','让人重新对生活有兴趣'],
+      needs:['开始很多，完成很少','情绪起伏大，容易自我怀疑'],
+      rhythm:'一次只认真做一件事，做完再庆祝。',
+      together:'你的热络很珍贵，也记得给安静的人留一点空间。'},
+    ISTJ:{name:'物流师', family:'sj', tagline:'值得托付的那个人',
+      kw:['可靠','秩序','长情'],
+      intro:'你不太说漂亮话，但你答应的事会做到。你喜欢事情有清楚的边界和顺序，因为那样世界才是稳的。你的温柔藏在细节里：记得、准备好、提前想到。',
+      gifts:['稳定地把一件事做完','记住别人忽略的细节','在混乱里建立秩序'],
+      needs:['对变化需要更长的适应时间','容易把标准也用在别人身上'],
+      rhythm:'允许计划里有 20% 的空白，留给意外。',
+      together:'你的关心很少说出口，偶尔说出来，对方会记得很久。'},
+    ISFJ:{name:'守卫者', family:'sj', tagline:'默默记得你的人',
+      kw:['体贴','细心','忠诚'],
+      intro:'你总是在别人开口之前就注意到需要什么，然后安静地做好。你不喜欢被关注，也不太会拒绝。你把很多爱放在了"没什么"的小事里，那些小事其实很重。',
+      gifts:['记得每个人的偏好','让人有被照顾的安全感','很长的耐心'],
+      needs:['很难说"不"，容易累到自己','委屈常常自己咽下去'],
+      rhythm:'每周留一件只为自己的小事，不用告诉任何人。',
+      together:'你的付出不需要一直被看见，但值得被回应。'},
+    ESTJ:{name:'总经理', family:'sj', tagline:'把事情真正落地的人',
+      kw:['务实','条理','担当'],
+      intro:'你相信事情要有结果，时间要有去处。你擅长组织、分配、推进，也愿意为结果负责。别人有时觉得你太直接，但那只是因为你不想浪费时间在含糊上。',
+      gifts:['快速组织人和资源','让混乱的事情有顺序','说到做到'],
+      needs:['容易忽略情绪的那部分','对"慢"不太有耐心'],
+      rhythm:'每天留十分钟，不处理任何事情。',
+      together:'你给的建议很实用，先问一句"你想听建议吗"会更暖。'},
+    ESFJ:{name:'执政官', family:'sj', tagline:'让一个地方暖起来的人',
+      kw:['热情','周到','归属'],
+      intro:'你在意关系里的温度，也擅长让它保持温度。你记得生日、记得谁不吃辣、记得把气氛圆回来。你把"大家好好的"当成自己的事，这份心意很珍贵。',
+      gifts:['让每个人都觉得自己被看见','组织温暖的聚会','维系长久的关系'],
+      needs:['太在意别人是否满意','容易为关系牺牲自己的需要'],
+      rhythm:'每周留一段不必照顾任何人的时间。',
+      together:'你的付出值得被珍惜，也请允许自己偶尔不周到。'},
+    ISTP:{name:'鉴赏家', family:'sp', tagline:'手上见真章的人',
+      kw:['冷静','动手','自由'],
+      intro:'你不太爱说，但很会做。遇到问题，你更愿意拆开看看它到底怎么运作。你不喜欢被管，也不喜欢空谈。你的温柔是行动：默默把坏了的东西修好。',
+      gifts:['快速找到问题的症结','动手能力强','危机里格外冷静'],
+      needs:['不太表达情绪，容易被误解为不在乎','对长期承诺会迟疑'],
+      rhythm:'给自己留出可以随时出门的自由。',
+      together:'你的在乎藏在行动里，偶尔说一句，会省掉很多误会。'},
+    ISFP:{name:'探险家', family:'sp', tagline:'把日子过成诗的人',
+      kw:['敏锐','柔和','当下'],
+      intro:'你对颜色、光线、气味这些别人略过的东西很敏感。你不喜欢争，也不太解释自己，只是安静地按自己的方式过日子。你的美不在张扬，在一种很自然的分寸感。',
+      gifts:['对美的直觉很准','温和，不给人压力','认真感受当下'],
+      needs:['容易回避冲突，把话咽回去','不太会为自己争取'],
+      rhythm:'每天做一件只为了好看或好玩的小事。',
+      together:'你不必什么都忍，说出来对方才有机会懂你。'},
+    ESTP:{name:'企业家', family:'sp', tagline:'先做再说的行动派',
+      kw:['果断','现场感','胆量'],
+      intro:'你在行动里思考，在场上做决定。你相信机会是抓住的，不是等来的。你直接、有趣、不怕试错，身边的人常被你带着跑起来。',
+      gifts:['临场反应快','敢于第一个上前','把沉闷的局面盘活'],
+      needs:['容易低估长期的代价','说话直，偶尔伤到人而不自知'],
+      rhythm:'每次冲动之前，给自己 24 小时。',
+      together:'你的行动力很有感染力，记得也停下来听听对方的节奏。'},
+    ESFP:{name:'表演者', family:'sp', tagline:'把今天点亮的人',
+      kw:['鲜活','慷慨','当下'],
+      intro:'你走到哪里，哪里就热闹一点。你不太为明天焦虑，更愿意把眼前这一刻过得好看。你给别人的是轻松和被接纳的感觉——和你在一起，不必表现得很厉害。',
+      gifts:['让人迅速放松','对气氛和情绪很敏感','把平凡的日子过得有滋味'],
+      needs:['容易回避沉重的话题','计划性弱，时间和钱常常不够用'],
+      rhythm:'给未来的自己留一点余地，不用多，一点点。',
+      together:'你的快乐很珍贵，也允许自己在难过时被看见。'}
+  };
+
+  var FAMILY = {
+    nt:{ label:'分析者', note:'用逻辑把世界拆开，再重新搭起来', list:['INTJ','INTP','ENTJ','ENTP'] },
+    nf:{ label:'理想者', note:'在意意义，也在意人心里那点微光', list:['INFJ','INFP','ENFJ','ENFP'] },
+    sj:{ label:'守护者', note:'把承诺、秩序和照顾，变成日常', list:['ISTJ','ISFJ','ESTJ','ESFJ'] },
+    sp:{ label:'探索者', note:'在当下动手，用身体去感受世界', list:['ISTP','ISFP','ESTP','ESFP'] }
+  };
+
+  var PAUSE_AT = [7,14,21];
+  var PAUSE_TEXT = {
+    7:['慢慢来，不用急着想清楚。','已经完成 7 / 28。深呼吸一次，再继续。'],
+    14:['一半了。这里没有正确答案。','已经完成 14 / 28。肩膀松一下，再往下走。'],
+    21:['快结束了，保持你自己的节奏。','已经完成 21 / 28。最后七题，慢慢答。']
+  };
+
+  var KEY_Q = 'qg.answers.v1';
+  var KEY_R = 'qg.result.v1';
+  var TOTAL = 28;
+
+  /* ---------------- 工具 ---------------- */
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  function store(key, val){
+    try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
+  }
+  function load(key){
+    try{ var raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; }catch(e){ return null; }
+  }
+  function wipe(key){ try{ localStorage.removeItem(key); }catch(e){} }
+
+  function buildQuestions(){
+    var rnd = mulberry32(20261113);
+    var raw = [];
+    for(var i = 0; i < 7; i++){
+      DIM_ORDER.forEach(function(d){
+        var it = ITEMS[d][i];
+        raw.push({ dim:d, stem:it[0], opts:[
+          { pole:POLE[d][0], text:it[1] },
+          { pole:POLE[d][1], text:it[2] }
+        ]});
+      });
+    }
+    raw.forEach(function(q){ if(rnd() < 0.5){ q.opts.reverse(); } });
+    for(var j = raw.length - 1; j > 0; j--){
+      var k = Math.floor(rnd() * (j + 1));
+      var tmp = raw[j]; raw[j] = raw[k]; raw[k] = tmp;
+    }
+    return raw;
+  }
+
+  var QUESTIONS = buildQuestions();
+
+  /* ---------------- 状态 ---------------- */
+  var state = {
+    screen:'intro',
+    idx:0,
+    answers:new Array(TOTAL).fill(null),
+    result:null,
+    preview:null,
+    paused:false,
+    locked:false,
+    kbd:false,
+    pausesShown:{}
+  };
+
+  /* ---------------- 屏幕 ---------------- */
+  function go(name){
+    state.screen = name;
+    $$('.screen').forEach(function(el){ el.classList.remove('is-active'); });
+    var el = document.getElementById('screen-' + name);
+    if(el){ el.classList.add('is-active'); }
+    document.body.classList.toggle('is-quiz', name === 'quiz');
+    document.body.classList.toggle('is-result', name === 'result');
+    window.scrollTo({ top:0, behavior:'auto' });
+  }
+
+  /* ---------------- 测评流程 ---------------- */
+  function renderQuiz(){
+    var q = QUESTIONS[state.idx];
+    if(!q) return;
+    state.locked = false;
+    $('#qIndex').textContent = 'Q.' + pad(state.idx + 1);
+    $('#qStem').textContent = q.stem;
+    $('#qOpts').innerHTML = q.opts.map(function(o, i){
+      return '<button class="opt" type="button" data-pole="' + o.pole + '">' +
+               '<span class="opt-key">' + (i + 1) + '</span>' +
+               '<span>' + o.text + '</span>' +
+             '</button>';
+    }).join('');
+    updateProgress();
+    $('#backBtn').disabled = state.idx === 0;
+    if(state.kbd){
+      var first = $('#qOpts .opt');
+      if(first){ try{ first.focus({ preventScroll:true }); }catch(err){ first.focus(); } }
+    }
+  }
+
+  function updateProgress(){
+    var done = state.answers.filter(Boolean).length;
+    $('#progressBar').style.width = (state.idx / TOTAL * 100).toFixed(2) + '%';
+    $('#quizCount').textContent = pad(state.idx + 1) + ' / ' + TOTAL;
+    $('#progress').setAttribute('aria-valuenow', String(done));
+  }
+
+  function choose(pole){
+    if(state.locked) return;
+    var q = QUESTIONS[state.idx];
+    if(!q) return;
+    state.locked = true;
+    state.answers[state.idx] = { dim:q.dim, pole:pole };
+    persistAnswers();
+    var card = $('#quizCard');
+    card.classList.add('is-out');
+    window.setTimeout(function(){
+      card.classList.remove('is-out');
+      state.idx += 1;
+      if(state.idx >= TOTAL){ startComputing(); return; }
+      if(PAUSE_AT.indexOf(state.idx) > -1 && !state.pausesShown[state.idx]){
+        state.pausesShown[state.idx] = true;
+        renderPause(state.idx);
+      }else{
+        renderQuiz();
+      }
+    }, 170);
+  }
+
+  function renderPause(at){
+    var t = PAUSE_TEXT[at] || PAUSE_TEXT[7];
+    state.paused = true;
+    $('#pauseLine').textContent = t[0];
+    $('#pauseSub').textContent = t[1];
+    $('#quizStage').hidden = true;
+    $('#pauseStage').hidden = false;
+    $('#progressBar').style.width = (at / TOTAL * 100).toFixed(2) + '%';
+    $('#quizCount').textContent = pad(at + 1) + ' / ' + TOTAL;
+    window.setTimeout(function(){ $('#pauseBtn').focus(); }, 60);
+  }
+
+  function continueFromPause(){
+    state.paused = false;
+    $('#quizStage').hidden = false;
+    $('#pauseStage').hidden = true;
+    renderQuiz();
+  }
+
+  function persistAnswers(){
+    store(KEY_Q, { idx:state.idx, answers:state.answers });
+  }
+
+  function startQuiz(resume){
+    state.locked = false;
+    state.paused = false;
+    if(!resume){
+      state.answers = new Array(TOTAL).fill(null);
+      state.idx = 0;
+      state.pausesShown = {};
+      wipe(KEY_Q);
+    }
+    go('quiz');
+    $('#quizStage').hidden = false;
+    $('#pauseStage').hidden = true;
+    renderQuiz();
+  }
+
+  function startComputing(){
+    var overlay = $('#computing');
+    overlay.classList.add('is-on');
+    window.setTimeout(function(){
+      finishTest();
+      overlay.classList.remove('is-on');
+    }, 1700);
+  }
+
+  function finishTest(){
+    var res = computeResult();
+    state.result = res;
+    store(KEY_R, { code:res.code, dims:res.dims, at:Date.now() });
+    wipe(KEY_Q);
+    showResult(res.code, false);
+  }
+
+  /* ---------------- 计分 ---------------- */
+  function computeResult(){
+    var code = '';
+    var dims = DIM_ORDER.map(function(d){
+      var meta = DIM_META[d];
+      var total = 7;
+      var ca = 0;
+      state.answers.forEach(function(a){
+        if(a && a.dim === d && a.pole === meta.a.l) ca++;
+      });
+      var cb = total - ca;
+      var pA = Math.round(ca / total * 100);
+      var pB = 100 - pA;
+      var win = pA >= pB ? meta.a : meta.b;
+      code += win.l;
+      return { key:d, a:meta.a, b:meta.b, pA:pA, pB:pB, win:win };
+    });
+    return { code:code, dims:dims };
+  }
+
+  /* ---------------- 渲染结果 ---------------- */
+  function dimsHTML(dims){
+    return dims.map(function(d){
+      var winA = d.win.l === d.a.l;
+      var p = d.pB;
+      var left = Math.min(p, 50);
+      var width = Math.abs(p - 50);
+      return '' +
+        '<div class="dim">' +
+          '<div class="dim-side' + (winA ? ' is-win' : '') + '">' +
+            '<span class="dim-let">' + d.a.l + '</span>' +
+            '<span class="dim-name">' + d.a.n + '</span>' +
+            '<span class="dim-pct">' + d.pA + '%</span>' +
+          '</div>' +
+          '<div class="dim-track">' +
+            '<span class="dim-tick"></span>' +
+            '<span class="dim-fill' + (p < 50 ? ' flip' : '') + '" data-left="' + left + '%" data-width="' + width + '%"></span>' +
+          '</div>' +
+          '<div class="dim-side dim-side--r' + (!winA ? ' is-win' : '') + '">' +
+            '<span class="dim-pct">' + d.pB + '%</span>' +
+            '<span class="dim-name">' + d.b.n + '</span>' +
+            '<span class="dim-let">' + d.b.l + '</span>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function listHTML(arr, cls){
+    return '<ul class="list' + (cls ? ' ' + cls : '') + '">' + arr.map(function(x, i){
+      return '<li><span class="mark">' + pad(i + 1) + '</span><span>' + x + '</span></li>';
+    }).join('') + '</ul>';
+  }
+
+  function showResult(code, preview){
+    var t = TYPES[code];
+    if(!t) return;
+    state.preview = preview ? code : null;
+    var shell = $('#resultShell');
+    shell.className = 'result-shell fam-' + t.family;
+
+    var dims = [];
+    if(preview){
+      if(state.result){ dims = state.result.dims; }
+    }else if(state.result){
+      dims = state.result.dims;
+    }
+
+    var today = new Date();
+    var dateStr = today.getFullYear() + ' 年 ' + (today.getMonth() + 1) + ' 月 ' + today.getDate() + ' 日';
+
+    var html = '';
+
+    html += '<div class="result-topline">';
+    html += '  <span class="eyebrow">' + (preview ? '正在浏览' : '你的类型') + '</span>';
+    html += preview
+      ? '  <span class="preview-note">这不是你的测评结果</span>'
+      : '  <span class="result-date">生成于 ' + dateStr + '</span>';
+    html += '</div>';
+
+    html += '<div class="result-hero">';
+    html += '  <div>';
+    html += '    <h1 class="code">' + code + '</h1>';
+    html += '    <div class="type-name">' + t.name + '</div>';
+    html += '    <p class="tagline">' + t.tagline + '</p>';
+    html += '  </div>';
+    html += '  <div>';
+    html += '    <p class="intro-text">' + t.intro + '</p>';
+    html += '    <div class="chips">' + t.kw.map(function(k){ return '<span class="chip">' + k + '</span>'; }).join('') + '</div>';
+    html += '  </div>';
+    html += '</div>';
+
+    if(dims.length && !preview){
+      html += '<section class="sec">';
+      html += '  <div class="sec-head"><h2>四个字母，是怎么来的</h2><span>越靠近一端，倾向越明显</span></div>';
+      html += '  <div class="dims">' + dimsHTML(dims) + '</div>';
+      html += '</section>';
+    }
+
+    html += '<section class="sec">';
+    html += '  <div class="sec-head"><h2>你身上的光</h2><span>不必全部认同，看看哪几条让你点头</span></div>';
+    html += '  <div class="duo">';
+    html += '    <div><div class="block-title">天赋所在</div>' + listHTML(t.gifts) + '</div>';
+    html += '    <div><div class="block-title">需要被照顾的部分</div>' + listHTML(t.needs, 'list--soft') + '</div>';
+    html += '  </div>';
+    html += '</section>';
+
+    html += '<section class="sec">';
+    html += '  <div class="sec-head"><h2>怎么和你相处</h2><span>给身边人的一点点提示</span></div>';
+    html += '  <div class="prose-rows">';
+    html += '    <div class="prose-row"><h3>适合的节奏<span>Rhythm</span></h3><p>' + t.rhythm + '</p></div>';
+    html += '    <div class="prose-row"><h3>和你相处<span>Together</span></h3><p>' + t.together + '</p></div>';
+    html += '  </div>';
+    html += '</section>';
+
+    html += '<div class="result-actions">';
+    if(preview){
+      html += '<button class="btn btn-primary" type="button" id="previewStart">' + (hasProgress() ? '继续我的测评' : '开始我的测评') + '</button>';
+      html += '<button class="btn btn-ghost" type="button" id="previewSheet">看看其他类型</button>';
+      html += '<span class="spacer"></span>';
+      html += '<button class="link-back" type="button" id="previewBack">返回首页</button>';
+    }else{
+      html += '<button class="btn btn-primary" type="button" id="saveBtn">保存这张结果</button>';
+      html += '<button class="btn btn-ghost" type="button" id="copyBtn">复制成文字</button>';
+      html += '<button class="btn btn-ghost" type="button" id="againBtn">重新测一次</button>';
+      html += '<span class="spacer"></span>';
+      html += '<button class="link-back" type="button" id="browseBtn">看看其他十五种 →</button>';
+    }
+    html += '</div>';
+
+    html += '<p class="footnote">这份结果来自 28 道自编题目，描述的是倾向，不是能力，也不是命运。人会在不同的关系、不同的阶段里，活出不同的侧面——如果你觉得它不像你，那也很正常，你比四个字母大得多。</p>';
+
+    shell.innerHTML = html;
+
+    go('result');
+
+    if(dims.length && !preview){
+      requestAnimationFrame(function(){
+        window.setTimeout(function(){
+          $$('.dim-fill', shell).forEach(function(el){
+            el.style.left = el.getAttribute('data-left');
+            el.style.width = el.getAttribute('data-width');
+          });
+        }, 120);
+      });
+    }
+
+    bindResultActions(preview);
+  }
+
+  function bindResultActions(preview){
+    var shell = $('#resultShell');
+    if(preview){
+      var ps = $('#previewStart', shell);
+      if(ps) ps.addEventListener('click', resumeOrStart);
+      var psh = $('#previewSheet', shell);
+      if(psh) psh.addEventListener('click', openSheet);
+      var pb = $('#previewBack', shell);
+      if(pb) pb.addEventListener('click', function(){ go('intro'); });
+      return;
+    }
+    var saveBtn = $('#saveBtn', shell);
+    if(saveBtn) saveBtn.addEventListener('click', function(){
+      if(!state.result) return;
+      store(KEY_R, { code:state.result.code, dims:state.result.dims, at:Date.now(), saved:true });
+      saveBtn.textContent = '已保存在这台设备';
+      saveBtn.disabled = true;
+      showToast('结果已保存，下次回来还能看到');
+    });
+    var copyBtn = $('#copyBtn', shell);
+    if(copyBtn) copyBtn.addEventListener('click', copyResult);
+    var again = $('#againBtn', shell);
+    if(again) again.addEventListener('click', function(){
+      wipe(KEY_R); wipe(KEY_Q);
+      state.result = null;
+      updateIntro();
+      startQuiz(false);
+    });
+    var browse = $('#browseBtn', shell);
+    if(browse) browse.addEventListener('click', openSheet);
+  }
+
+  function copyResult(){
+    if(!state.result) return;
+    var t = TYPES[state.result.code];
+    var lines = ['栖光 MBTI · ' + state.result.code + ' ' + t.name, t.tagline, ''];
+    state.result.dims.forEach(function(d){
+      lines.push(d.win.l + ' ' + d.win.n + ' ' + (d.win.l === d.a.l ? d.pA : d.pB) + '%');
+    });
+    lines.push('', t.intro);
+    var text = lines.join('\n');
+    function done(){ showToast('已经复制好了，可以贴给朋友'); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    }else{ fallback(); }
+    function fallback(){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        done();
+      }catch(e){ showToast('复制没有成功，可以手动选中文字'); }
+    }
+  }
+
+  var toastTimer = null;
+  function showToast(msg){
+    var el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('is-on');
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function(){ el.classList.remove('is-on'); }, 2400);
+  }
+
+  /* ---------------- 十六型抽屉 ---------------- */
+  function fillSheet(){
+    var body = $('#sheetBody');
+    if(body.dataset.filled === '1') return;
+    var html = '';
+    Object.keys(FAMILY).forEach(function(f){
+      var fam = FAMILY[f];
+      html += '<div class="sheet-group fam-' + f + '">';
+      html += '  <div class="sheet-group-head"><span class="dot"></span><b>' + fam.label + '</b><em>' + fam.note + '</em></div>';
+      html += '  <div class="type-grid">';
+      fam.list.forEach(function(code){
+        var t = TYPES[code];
+        html += '<button class="type-card fam-' + f + '" type="button" data-type="' + code + '">' +
+                  '<span class="tc-code">' + code + '</span>' +
+                  '<span class="tc-name">' + t.name + '</span>' +
+                  '<span class="tc-tag">' + t.tagline + '</span>' +
+                '</button>';
+      });
+      html += '  </div>';
+      html += '</div>';
+    });
+    body.innerHTML = html;
+    body.dataset.filled = '1';
+    $$('.type-card', body).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        closeSheet();
+        showResult(btn.getAttribute('data-type'), true);
+      });
+    });
+  }
+
+  var lastFocus = null;
+  function openSheet(){
+    fillSheet();
+    lastFocus = document.activeElement;
+    $('#sheet').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    $('#sheetClose').focus();
+  }
+  function closeSheet(){
+    $('#sheet').classList.remove('is-open');
+    document.body.style.overflow = '';
+    if(lastFocus && lastFocus.focus){ try{ lastFocus.focus(); }catch(e){} }
+  }
+
+  /* ---------------- 首页状态 ---------------- */
+  function hasProgress(){
+    var prog = load(KEY_Q);
+    return !!(prog && prog.answers && prog.answers.filter(Boolean).length > 0 &&
+              prog.answers.filter(Boolean).length < TOTAL);
+  }
+
+  function resumeOrStart(){
+    var prog = load(KEY_Q);
+    if(prog && prog.answers && prog.answers.filter(Boolean).length > 0){
+      state.idx = Math.min(prog.idx || 0, TOTAL - 1);
+      state.answers = prog.answers.slice(0, TOTAL);
+      while(state.answers.length < TOTAL){ state.answers.push(null); }
+      startQuiz(true);
+    }else{
+      startQuiz(false);
+    }
+  }
+
+  function updateIntro(){
+    var saved = load(KEY_R);
+    var resumable = hasProgress();
+    var chip = $('#savedChip');
+    if(saved && TYPES[saved.code]){
+      $('#savedCode').textContent = saved.code;
+      $('#savedName').textContent = TYPES[saved.code].name;
+      chip.hidden = false;
+    }else{
+      chip.hidden = true;
+    }
+    if(resumable){
+      $('#startLabel').textContent = '继续测评';
+    }else if(saved && TYPES[saved.code]){
+      $('#startLabel').textContent = '重新测一次';
+    }else{
+      $('#startLabel').textContent = '开始测评';
+    }
+  }
+
+  /* ---------------- 事件 ---------------- */
+  function bind(){
+    $('#startBtn').addEventListener('click', resumeOrStart);
+
+    $('#peekBtn').addEventListener('click', openSheet);
+    $('#typesBtn').addEventListener('click', openSheet);
+    $$('[data-sheet]').forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault(); openSheet(); });
+    });
+    $('#sheetBg').addEventListener('click', closeSheet);
+    $('#sheetClose').addEventListener('click', closeSheet);
+
+    $('#savedOpen').addEventListener('click', function(){
+      var saved = load(KEY_R);
+      if(saved && TYPES[saved.code]){
+        state.result = { code:saved.code, dims:saved.dims || [] };
+        showResult(saved.code, false);
+      }
+    });
+
+    $('#qOpts').addEventListener('click', function(e){
+      var btn = e.target.closest('.opt');
+      if(!btn) return;
+      choose(btn.getAttribute('data-pole'));
+    });
+
+    $('#backBtn').addEventListener('click', function(){
+      if(state.idx > 0){
+        state.idx -= 1;
+        renderQuiz();
+      }
+    });
+
+    $('#quitBtn').addEventListener('click', function(){
+      persistAnswers();
+      go('intro');
+      updateIntro();
+    });
+
+    $('#pauseBtn').addEventListener('click', continueFromPause);
+
+    $('#brandBtn').addEventListener('click', function(){
+      if(state.screen === 'quiz') persistAnswers();
+      go('intro');
+      updateIntro();
+    });
+
+    $('#howLink').addEventListener('click', function(e){
+      if(state.screen !== 'intro'){
+        e.preventDefault();
+        go('intro');
+      }
+    });
+
+    document.addEventListener('keydown', function(e){
+      if($('#sheet').classList.contains('is-open')){
+        if(e.key === 'Escape'){ closeSheet(); }
+        return;
+      }
+      if(state.screen !== 'quiz') return;
+      if(!$('#pauseStage').hidden){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          continueFromPause();
+        }
+        return;
+      }
+      if(e.key === '1' || e.key === '2'){
+        state.kbd = true;
+        var btn = $$('#qOpts .opt')[Number(e.key) - 1];
+        if(btn) btn.click();
+      }else if(e.key === 'ArrowLeft'){
+        if(state.idx > 0){ state.idx -= 1; renderQuiz(); }
+      }
+    });
+
+    window.addEventListener('resize', function(){
+      document.body.style.overflow = $('#sheet').classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+
+  function init(){
+    bind();
+    updateIntro();
+    $('#footerYear').textContent = '© ' + new Date().getFullYear();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
